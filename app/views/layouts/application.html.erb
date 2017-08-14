@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Workspace</title>
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+    <%= csrf_meta_tags %>
+  </head>
+  <body>
+    <div id="global-header">
+      <div class="container">
+        <div class="logo">My profile</div>
+        <ul class="menu">
+          <a href="/">
+            <li class="item">Home</li>
+          </a>
+            <%= link_to new_contact_path do %>
+            <li class="item">Contact</li>
+            <% end %>
+            <% if user_signed_in? %>
+              <li class="item"><%= current_user.name %></li>
+              <li class="item"><%= link_to 'Sign out', session_path(current_user), method: 'delete' %></li>
+              <% if current_user.admin %>
+              <li class="item"><%= link_to 'Contacts List', contacts_path %></li>
+              <% end %>
+            <% else %>
+              <li class="item"><%= link_to 'Sign in', new_session_path %></li>
+              <li class="item"><%= link_to 'Sign up', new_user_path %></li>
+            <% end %>
+        </ul>
+      </div>
+    </div>
+    <div id="wrapper">
+      <%= flash[:alert] %>
+      <%= yield %>
+    </div>
+  </body>
+</html>
